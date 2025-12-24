@@ -1,6 +1,6 @@
 import React from "react";
 import createProfileImg from "../../assets/home/3easyStep/createProfile.webp";
-import searchMatchesImg from "../../assets/home/3easyStep/searchIcon.png";
+import searchMatchesImg from "../../assets/home/3easyStep/connectImg.webp";
 import connectJourneyImg from "../../assets/home/3easyStep/connectImg.webp";
 
 const steps = [
@@ -67,20 +67,24 @@ const ThreeSteps = () => {
             </div>
 
             {/* Title */}
-            <h3 className="
+            <h3
+              className="
               text-lg font-semibold text-gray-800 mb-2
               transition-colors duration-300
               group-hover:text-orange-500
-            ">
+            "
+            >
               {step.title}
             </h3>
 
             {/* Description */}
-            <p className="
+            <p
+              className="
               text-gray-600 text-sm max-w-xs
               transition-colors duration-300
               group-hover:text-gray-700
-            ">
+            "
+            >
               {step.description}
             </p>
           </div>
