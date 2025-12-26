@@ -5,10 +5,12 @@ import {
   useGetOwnProfileQuery,
   useGetProfilePhotoQuery,
 } from "../../context/profileApi";
+import defaultProfileImg from "../../assets/DefaultImage/AvtarImg.avif";
+
 
 // SAME helper
 const toImageUrl = (fileData) =>
-  fileData ? `data:image/jpeg;base64,${fileData}` : "";
+  fileData ? `data:image/jpeg;base64,${fileData}` : defaultProfileImg;
 
 const LogoutPanel = ({
   open,
@@ -76,7 +78,13 @@ const LogoutPanel = ({
                     src={profilePic}
                     alt="Profile"
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = defaultProfileImg;
+                    }}
                   />
+
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <User size={40} className="text-gray-400" />

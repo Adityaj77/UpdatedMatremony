@@ -172,7 +172,7 @@
 //   const f = d.familyBackground || {};
 //   const pp = d.partnerPreference || {};
 
-//   // ✅ BASE64 IMAGE HANDLING
+//   // BASE64 IMAGE HANDLING
 //   const profileImage =
 //     d.hasProfilePhoto && d.profilePhotoBase64 && d.profilePhotoContentType
 //       ? `data:${d.profilePhotoContentType};base64,${d.profilePhotoBase64}`
@@ -180,7 +180,7 @@
 
 //   return {
 //     userId: d.userId,
-//     profileImage, // ✅ ADD THIS
+//     profileImage,
 
 //     /* ================= PERSONAL ================= */
 //     fullName:
@@ -288,16 +288,20 @@ import { useLocation } from "react-router-dom";
 import { useGetProfileByProfileIdQuery } from "../../context/profileApi";
 import OthersEmptyBiodata, { emptyBiodata } from "./OthersEmptyBiodata";
 
+import defaultProfileImg from "../../assets/DefaultImage/AvtarImg.avif";
+
+
 export default function OthersEmptyBiodataPage() {
   const location = useLocation();
-  const profileId = location.state?.profileId; // completeProfileId
+  const userProfileId = location.state?.userProfileId;
 
-  if (!profileId) {
+
+  if (!userProfileId) {
     return <p className="text-center mt-10">Invalid Profile ID</p>;
   }
 
   const { data, isLoading, isError } =
-    useGetProfileByProfileIdQuery(profileId);
+    useGetProfileByProfileIdQuery(userProfileId);
 
   const mappedData = useMemo(() => {
     if (!data?.data) return emptyBiodata;
@@ -310,10 +314,13 @@ export default function OthersEmptyBiodataPage() {
     const pp = d.partnerPreference || {};
 
     /* ✅ PROFILE IMAGE FROM SAME API */
-    const profileImage =
-      d.hasProfilePhoto && d.profilePhotoBase64
-        ? `data:${d.profilePhotoContentType};base64,${d.profilePhotoBase64}`
-        : "/default-avatar.jpg";
+  const profileImage =
+  d.hasProfilePhoto === true &&
+  d.profilePhotoBase64 &&
+  d.profilePhotoContentType
+    ? `data:${d.profilePhotoContentType};base64,${d.profilePhotoBase64}`
+    : defaultProfileImg;
+
 
     return {
       userId: d.userId,

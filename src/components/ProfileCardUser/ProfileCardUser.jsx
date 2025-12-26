@@ -190,11 +190,14 @@ import {
   useGetReceivedInterestsQuery,
   useGetProfilePhotoQuery,
 } from "../../context/profileApi";
+import defaultProfileImg from "../../assets/DefaultImage/AvtarImg.avif";
+
 
 const toImageUrl = (resp) =>
   resp?.data?.fileData
     ? `data:image/jpeg;base64,${resp.data.fileData}`
-    : "/default-avatar.jpg";
+    : defaultProfileImg;
+
 
 const mapProfileCardUser = (api) => {
   const data = api?.data;
@@ -312,8 +315,13 @@ const ProfileCardUser = () => {
             src={profileImage}
             alt="Profile"
             className="w-full h-full object-cover"
-            onError={(e) => (e.target.src = "/default-avatar.jpg")}
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = defaultProfileImg;
+            }}
           />
+
         </div>
 
         {/* COMPLETION BADGE */}
